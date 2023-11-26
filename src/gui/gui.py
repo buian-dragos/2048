@@ -1,4 +1,6 @@
 import pygame
+from src.domain.constants import FPS, WIDTH, HEIGHT, SQUARE_SIZE
+from src.domain.constants import WHITE,BLACK,GRAY, NUMBERS_COLORS
 
 class Gui:
     def __init__(self,serv):
@@ -6,43 +8,41 @@ class Gui:
 
         self._serv.start()
 
-        self._FPS = 60
-        # TODO Add constants to different file
-        self._WIDTH = 800
-        self._HEIGHT = 800
-        self._SQUARE_SIZE = 200
-        self._white = (255, 255, 255)
-        self._black = (0, 0, 0)
-
         pygame.init()
         pygame.font.init()
 
-        self._WIN = pygame.display.set_mode((self._WIDTH,self._HEIGHT))
+        self._WIN = pygame.display.set_mode((WIDTH,HEIGHT))
         pygame.display.set_caption('2048')
 
-    # TODO Add colors depending on the value
-    # Dict of colors in the constants file
     def draw_board(self):
         board = self._serv.getBoard()
-        font = pygame.font.Font(None, 36)  # You can change the font and size as needed
+        font = pygame.font.Font(None, 64)  # You can change the font and size as needed
         for row in range(4):
             for col in range(4):
-                pygame.draw.rect(self._WIN, self._white, (col * 200, row * 200, 200, 200))
-                pygame.draw.rect(self._WIN, self._black, (col * 200, row * 200, 200, 200), 8)
 
                 numb = board[row][col]
 
                 if numb is None:
                     numb = ""
+                    pygame.draw.rect(self._WIN, WHITE, (col * SQUARE_SIZE, row * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+                else:
+                    numb = str(numb)
 
-                numb = str(numb)
+                    if numb in NUMBERS_COLORS:
+                        color = NUMBERS_COLORS[numb]
+                    else:
+                        color = GRAY
+                    pygame.draw.rect(self._WIN, color, (col * SQUARE_SIZE, row * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+
+                pygame.draw.rect(self._WIN, BLACK, (col * SQUARE_SIZE, row * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE), 8)
+
 
                 # Create a text surface with the desired text
-                text = font.render(numb, True, self._black)  # Change "Text" to your desired text
+                text = font.render(numb, True, BLACK)  # Change "Text" to your desired text
 
                 # Calculate the position to center the text inside the rectangle
                 text_rect = text.get_rect()
-                text_rect.center = (col * 200 + 100, row * 200 + 100)  # Centers text in 200x200 rectangle
+                text_rect.center = (col * SQUARE_SIZE + SQUARE_SIZE//2, row * SQUARE_SIZE + SQUARE_SIZE//2)  # Centers text in 200x200 rectangle
 
                 # Blit (draw) the text surface onto the window
                 self._WIN.blit(text, text_rect)
@@ -53,7 +53,7 @@ class Gui:
         clock = pygame.time.Clock()
 
         while run:
-            clock.tick(self._FPS)
+            clock.tick(FPS)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

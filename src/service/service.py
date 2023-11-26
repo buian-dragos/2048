@@ -12,8 +12,6 @@ class Service:
         self._repo.updateBoard(board)
 
     def randomGenerator(self,board):
-        print(board)
-
         i1 = randint(0,3)
         i2 = randint(0,3)
         val = randint(0,5)
@@ -75,7 +73,7 @@ class Service:
         self._repo.updateIndex(2, 0, 4)
         self._repo.updateIndex(3, 0, 4)
 
-        print(self._repo.getBoard().getElems())
+        # print(self._repo.getBoard().getElems())
 
     def flipFromLeft(self):
 

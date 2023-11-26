@@ -1,0 +1,37 @@
+FPS = 60
+WIDTH = 800
+HEIGHT = 800
+SQUARE_SIZE = 200
+
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+# BLUE = (0, 0, 255)
+BLUE = (70, 130, 180)
+YELLOW = (255, 255, 0)
+ORANGE = (255, 165, 0)
+PURPLE = (128, 0, 128)
+# PINK = (255, 192, 203)
+PINK = (255, 182, 193)
+BROWN = (139, 69, 19)
+GRAY = (128, 128, 128)
+MAGENTA = (255, 0, 255)
+# GOLD = (255, 215, 0)
+GOLD = (255, 200, 0)
+BURGUNDY = (128, 0, 32)
+
+NUMBERS_COLORS = {
+    "2" : YELLOW,
+    "4" : ORANGE,
+    "8" : BROWN,
+    "16" : GREEN,
+    "32" : BLUE,
+    "64" : BURGUNDY,
+    "128" : RED,
+    "256" : PINK,
+    "512" : MAGENTA,
+    "1024" : PURPLE,
+    "2048" : GOLD,
+}
+
