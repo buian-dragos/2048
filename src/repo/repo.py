@@ -18,13 +18,12 @@ class Repo:
         self._board.updateIndex(i1, i2, val)
 
     def updateBoard(self,board: list):
-        print("aaaa")
-        print(str(self._undo_board))
-        self._undo_board = deepcopy(GameBoard(self._board.getElems()))
         self._board = GameBoard(board)
-        print(self._board)
-        print(self._undo_board)
+
+    def updateUndo(self, undo):
+        self._undo_board = deepcopy(undo)
 
     def undo(self):
-        self._board = GameBoard(self._undo_board.getElems())
-        self._undo_board = None
+        if self._undo_board is not None:
+            self._board = GameBoard(self._undo_board)
+            self._undo_board = None

@@ -6,7 +6,14 @@ class Service:
     def __init__(self, repo):
         self._repo = repo
 
-    def randomGenerator(self):
+    def start(self):
+        board = deepcopy(self.randomGenerator(self._repo.getBoard().getElems()))
+
+        self._repo.updateBoard(board)
+
+    def randomGenerator(self,board):
+        print(board)
+
         i1 = randint(0,3)
         i2 = randint(0,3)
         val = randint(0,5)
@@ -16,10 +23,10 @@ class Service:
         else:
             val = 2
 
-        if self._repo.checkIndex(i1, i2):
-            self._repo.updateIndex(i1, i2, val)
-            return
-        self.randomGenerator()
+        if board[i1][i2] == None:
+            board[i1][i2] = val
+            return board
+        return self.randomGenerator(board)
 
 
     def upgrade(self,line):
@@ -49,20 +56,18 @@ class Service:
         temp_board = []
         for line in board:
             temp_board.append(self.upgrade(line))
-        # print(temp_board)
 
         board.clear()
 
         for line in temp_board:
             board.append(self.moveOne(line))
 
-        # print(board)
-
-        # print(self._repo.getBoard().lostNoSpace())
         if board != check_board:
-            self.randomGenerator()
+            board = self.randomGenerator(board)
 
         return board
+
+
 
     def test_move(self):
         self._repo.updateIndex(0, 0, 2)
@@ -74,9 +79,8 @@ class Service:
 
     def flipFromLeft(self):
 
-
         board = self._repo.getBoard().getElems()
-
+        self._repo.updateUndo(self._repo.getBoard().getElems())
         self.flipToLeft(self.moveAll(board))
 
     def flipFromRight(self):
@@ -90,6 +94,7 @@ class Service:
 
             temp_board.append(line)
 
+        self._repo.updateUndo(self._repo.getBoard().getElems())
         self.flipToRight(self.moveAll(temp_board))
 
 
@@ -105,6 +110,7 @@ class Service:
             temp_line = deepcopy(line)
             temp_board.append(temp_line)
 
+        self._repo.updateUndo(self._repo.getBoard().getElems())
         self.flipToUp(self.moveAll(temp_board))
 
     def flipFromDown(self):
@@ -127,6 +133,7 @@ class Service:
 
             board.append(line)
 
+        self._repo.updateUndo(self._repo.getBoard().getElems())
         self.flipToDown(self.moveAll(temp_board))
 
     def flipToLeft(self,board):
@@ -140,7 +147,6 @@ class Service:
                 line[i], line[len(line) - i - 1] = line[len(line) - i - 1], line[i]
 
             temp_board.append(line)
-
         self._repo.updateBoard(temp_board)
 
 
@@ -157,7 +163,6 @@ class Service:
         board.clear()
 
         self._repo.updateBoard(temp_board)
-        # print(temp_board)
 
     def flipToDown(self,board):
         temp_board = []
@@ -178,7 +183,7 @@ class Service:
             board.append(temp_line)
 
         self._repo.updateBoard(board)
-        # print(board)
+
 
     def getBoard(self):
         return self._repo.getBoard().getElems()

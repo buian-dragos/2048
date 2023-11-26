@@ -8,6 +8,3 @@ if __name__ == '__main__':
     gui = Gui(serv)
 
     gui.run()
-
-    # serv.test_move()
-    # serv.flipFromDown()u

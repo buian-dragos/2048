@@ -4,7 +4,7 @@ class Gui:
     def __init__(self,serv):
         self._serv = serv
 
-        self._serv.randomGenerator()
+        self._serv.start()
 
         self._FPS = 60
         # TODO Add constants to different file
@@ -56,8 +56,6 @@ class Gui:
             clock.tick(self._FPS)
 
             for event in pygame.event.get():
-
-
                 if event.type == pygame.QUIT:
                     run = False
 
@@ -70,7 +68,7 @@ class Gui:
                         self._serv.flipFromUp()
                     if event.key == pygame.K_DOWN:
                         self._serv.flipFromDown()
-                    if event.key == pygame.K_u:
+                    if event.key == pygame.K_z:
                         self._serv.undo()
 
 
